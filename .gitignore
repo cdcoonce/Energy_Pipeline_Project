@@ -1,0 +1,19 @@
+# Ignore Python virtual environment
+.venv/
+
+# Ignore Dagster temp files
+**/.tmp_dagster_home*/
+
+# Ignore cache and compiled files
+__pycache__/
+*.pyc
+
+# Ignore data outputs
+data/*.csv
+data/*.duckdb
+
+# Ignore environment variables
+.env
+
+# Ignore VS Code settings
+.vscode/
