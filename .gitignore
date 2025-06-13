@@ -1,19 +1,41 @@
-# Ignore Python virtual environment
+# --- Python ---
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
 .venv/
+venv/
 
-# Ignore Dagster temp files
+# --- VS Code ---
+.vscode/
+*.code-workspace
+
+# --- macOS system files ---
+.DS_Store
+
+# --- Dagster ---
 **/.tmp_dagster_home*/
 
-# Ignore cache and compiled files
-__pycache__/
-*.pyc
+# --- dbt artifacts ---
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/.dbt/
 
-# Ignore data outputs
+# --- Data files (cleaned, raw, or intermediate) ---
 data/*.csv
 data/*.duckdb
+data/processed/
+data/raw/
 
-# Ignore environment variables
+# --- Build artifacts ---
+*.egg-info/
+build/
+dist/
+
+# --- Environment ---
 .env
+.env.*
 
-# Ignore VS Code settings
-.vscode/
+# --- Jupyter / notebooks ---
+.ipynb_checkpoints/
