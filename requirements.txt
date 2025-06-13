@@ -1,0 +1,8 @@
+polars-lts-cpu
+dagster
+dagster-webserver
+dbt-core
+duckdb
+pandas  # optional for comparison
+pyarrow
+sqlalchemy
