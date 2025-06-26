@@ -1,0 +1,9 @@
+# dbt_project/dbt_project.yml
+name: energy_pipeline_project
+version: '1.0'
+profile: energy_pipeline_project
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+target-path: "target"
+clean-targets: ["target", "dbt_modules"]

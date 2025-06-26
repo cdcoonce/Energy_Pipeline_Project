@@ -1,0 +1,65 @@
+version: 2
+
+sources:
+  - name: energy
+    database: energy
+    schema: main
+    tables:
+      - name: power_output_cleaned
+      - name: plant_locations
+
+models:
+  - name: power_summary
+    description: "Summary of average power output by site"
+    columns:
+      - name: site
+        description: "Unique identifier for the site"
+        tests:
+          - not_null
+          - unique
+      - name: avg_power_output
+        description: "Average power output in kilowatts"
+        tests:
+          - not_null
+
+  - name: plant_efficiency
+    description: "Efficiency of each plant based on output vs capacity"
+    columns:
+      - name: plant_id
+        tests:
+          - not_null
+      - name: efficiency
+        description: "Ratio of total output to capacity"
+        tests:
+          - not_null
+
+  - name: plant_locations
+    description: "Geographical locations of power plants"
+    columns:
+      - name: plant_id
+        description: "Unique identifier for the plant"
+        tests:
+          - not_null
+          - unique
+      - name: latitude
+        description: "Latitude of the plant location"
+        tests:
+          - not_null
+      - name: longitude
+        description: "Longitude of the plant location"
+        tests:
+          - not_null
+
+  - name: power_trends_by_day
+    description: "Summarizes power output and capacity factor by day and region"
+    columns:
+      - name: date
+        description: "The calendar date of the power output"
+      - name: state
+        description: "State where the power plant is located"
+      - name: total_power_kw
+        description: "Total power output across all plants in region for the day"
+      - name: avg_capacity_factor
+        description: "Average capacity factor across all plants in the region for the day"
+
+      
