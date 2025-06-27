@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    post_hook="COPY (SELECT * FROM {{ this }}) TO '../data/exports/power_with_locations.csv' (HEADER, DELIMITER ',')"
+) }}
+
 -- models/power_with_location.sql
 WITH power AS (
     SELECT *

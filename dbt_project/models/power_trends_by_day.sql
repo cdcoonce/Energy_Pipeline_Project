@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    post_hook="COPY (SELECT * FROM {{ this }}) TO '../data/exports/power_trends_by_day.csv' (HEADER, DELIMITER ',')"
+) }}
+
 with power_location as (
     select * from {{ ref('power_with_locations') }}
 )

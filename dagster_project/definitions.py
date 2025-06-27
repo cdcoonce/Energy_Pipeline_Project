@@ -1,9 +1,17 @@
-from dagster import Definitions, load_assets_from_modules
-
-from dagster_project import assets  # noqa: TID252
-
-all_assets = load_assets_from_modules([assets])
+from pathlib import Path
+from dagster import Definitions
+from dagster_dbt import DbtCliResource
+from dagster_project import jobs, sensors
+from dagster_project.assets import dbt_assets
 
 defs = Definitions(
-    assets=all_assets,
+    assets=[*dbt_assets],
+    jobs=[jobs.notify_on_trends_job],
+    sensors=[sensors.trends_sensor],
+    resources={
+        "dbt": DbtCliResource(
+            project_dir=str(Path(__file__).resolve().parent.parent / "dbt_project"),
+            profiles_dir=str(Path.home() / ".dbt"),
+        )
+    }
 )

@@ -1,5 +1,8 @@
 
 from dagster import asset
+from dagster_dbt import load_assets_from_dbt_project
+from pathlib import Path
+
 import polars as pl
 import duckdb
 import pyarrow
@@ -35,7 +38,7 @@ def daily_summary(power_output_cleaned: pl.DataFrame) -> pl.DataFrame:
     print("Saved daily_summary.csv")
     return df
 
-@asset(deps=["power_output_cleaned"])
+@asset() # deps=["power_output_cleaned"]
 def power_output_table(power_output_cleaned: pl.DataFrame) -> str:
     print("Loading into DuckDB...")
 
@@ -68,7 +71,7 @@ def plant_locations_cleaned():
     df.write_csv("data/processed/plant_locations_cleaned.csv")
     return df
 
-@asset(deps=["plant_locations_cleaned", "power_output_table"])
+@asset(deps=["power_output_table"]) # deps=["power_output_cleaned"]
 def plant_locations_table(plant_locations_cleaned: pl.DataFrame) -> pl.DataFrame:
     # Load CSV using Polars
     df = pl.read_csv("data/processed/plant_locations_cleaned.csv")
@@ -86,3 +89,13 @@ def plant_locations_table(plant_locations_cleaned: pl.DataFrame) -> pl.DataFrame
     con.close()
 
     return df
+
+## Run the dbt pipeline
+
+DBT_PROJECT_DIR = Path(__file__).resolve().parent.parent / "dbt_project"
+DBT_PROFILES_DIR = Path.home() / ".dbt"
+
+dbt_assets = load_assets_from_dbt_project(
+    project_dir=str(DBT_PROJECT_DIR),
+    profiles_dir=str(DBT_PROFILES_DIR),
+)

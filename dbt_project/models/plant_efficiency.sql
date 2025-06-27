@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    post_hook="COPY (SELECT * FROM {{ this }}) TO '../data/exports/plant_efficiency.csv' (HEADER, DELIMITER ',')"
+) }}
+
 with source_data as (
     select
         asset_id as plant_id,
