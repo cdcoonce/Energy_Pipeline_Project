@@ -28,15 +28,14 @@ dbt_project/.dbt/
 data/*.csv
 data/*.duckdb
 data/processed/
-data/raw/
+data/exports
+data
 
 # --- Build artifacts ---
 *.egg-info/
 build/
 dist/
 logs/
-tmpor3upm2g/
-
 
 # --- Environment ---
 .env
